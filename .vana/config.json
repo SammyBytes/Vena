@@ -4,7 +4,7 @@
     "engine": "mariadb"
   },
   "database": {
-    "default_name": "Vena_main",
+    "default_name": "helio",
     "host": "localhost",
     "port": 3306
   }

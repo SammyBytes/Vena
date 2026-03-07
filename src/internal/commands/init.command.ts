@@ -7,14 +7,14 @@ import {
   VENA_CONFIG_PATH,
   VENA_STATE_FILE,
 } from "@/const";
-import type { VenaConfig } from "@/internal/interfaces/config.interface";
+import type { VenaConfig } from "@/internal/interfaces/vena/config.interface";
 import { getLibsql } from "@/internal/libsql.client";
 import { file } from "bun";
 import { mkdir } from "node:fs/promises";
 import { readFile } from "node:fs/promises";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { VenaAuth } from "../interfaces/auth.interfaces";
+import type { VenaAuth } from "../interfaces/vena/auth.interfaces";
 
 export const initProjectCommandAsync = async (
   projectName: string,
