@@ -46,7 +46,7 @@ bun run src/index.ts
 ### Roadmap (Stages)
 
 * [x] **Stage 1:** Base infrastructure, JSON configuration, and local status with LibSQL.
-* [ ] **Stage 2:** Engine drivers (MariaDB) and physical branch management.
+* [x] **Stage 2:** Engine drivers (MariaDB) and physical branch management.
 * [ ] **Stage 3:** Schema snapshots and democratic versioning.
 * [ ] **Stage 4:** Deep integration with Git Hooks.
 
