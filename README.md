@@ -2,7 +2,7 @@
 
 **Vena** is a local-first database orchestrator designed to bring the Git branching experience to the world of relational databases.
 
-> **Note:** This project is still in development and is not ready for production use.
+> [!NOTE]
 > **Hobby Project:** Vena started as a personal experiment to simplify workflow with MariaDB/MySQL in local development environments (especially on Arch Linux). It is not a network proxy, it is a context manager.
 
 ###  The Purpose
