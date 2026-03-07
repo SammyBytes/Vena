@@ -5,7 +5,6 @@ export const createBranchCommandAsync = async (newBranch: string) => {
   const ctx = await loadContext();
   const driver = loadDriver(ctx);
 
-  const source = ctx.config.database.default_name;
   const projectName = ctx.config.project.name;
   const target = `${projectName}_${newBranch}`;
 
