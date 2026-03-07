@@ -10,8 +10,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@commands/*": ["./src/commands/*"],
-      "@types/*": ["src/interfaces/*"],
+      "@commands/*": ["src/internal/commands/*"],
+      "@types/*": ["src/internal/interfaces/*"],
       "@utils/*": ["./src/utils/*"]
     },
 

@@ -5,7 +5,7 @@ import {
   VENA_CONFIG_PATH,
   VENA_STATE_FILE,
 } from "@/const";
-import type { VenaConfig } from "@/interfaces/config.interface";
+import type { VenaConfig } from "@/internal/interfaces/config.interface";
 import { getLibsql } from "@/internal/libsql.client";
 import { file } from "bun";
 import { mkdir } from "node:fs/promises";
