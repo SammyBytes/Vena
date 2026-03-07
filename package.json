@@ -1,11 +1,19 @@
 {
   "name": "vena",
+  "version": "0.0.1",
+  "description": "A simple CLI for managing your projects",
   "module": "src/index.ts",
+  "scripts": {
+    "serve": "bun run src/index.ts --watch"
+  },
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.0"
   }
 }
