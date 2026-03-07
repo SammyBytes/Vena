@@ -5,7 +5,7 @@ export interface VenaConfig {
   };
   database: {
     default_name: string;
-    user: string;
+    host: string;
     port: number;
   };
 }
