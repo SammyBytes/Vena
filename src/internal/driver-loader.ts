@@ -1,6 +1,6 @@
-import type { IDriver } from "@/drivers/driver.interface";
+import type { IDriver } from "@/modules/drivers/driver.interface";
 import type { VenaContext } from "./interfaces/vena/context.interface";
-import { MariaDBDriver } from "@/drivers/mariadb/mariadb.driver";
+import { MariaDBDriver } from "@/modules/drivers/mariadb/mariadb.driver";
 
 export const loadDriver = (ctx: VenaContext) => {
   let driver: IDriver;

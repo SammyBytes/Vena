@@ -32,11 +32,15 @@ export class MariaDBDriver implements IDriver, OSInfo {
   async createBranch(name: string): Promise<void> {
     const options = this.options;
     const args = [...options, "create", name];
-    const proc = Bun.spawn([this.procAdminName, ...args]);
+    const proc = Bun.spawn([this.procAdminName, ...args], {
+      stderr: "inherit",
+    });
 
     const result = await proc.exited;
     if (result !== 0) {
-      throw new Error(`Could not create branch ${name}`);
+      throw new Error(`Could not create branch ${name}`, {
+        cause: proc.stderr,
+      });
     }
   }
   async cloneStructure(targetDb: string): Promise<void> {
@@ -60,7 +64,9 @@ export class MariaDBDriver implements IDriver, OSInfo {
     const result = await proc.exited;
 
     if (result !== 0)
-      throw new Error(`Linux Clone failed from ${source} to ${target}`);
+      throw new Error(`Linux Clone failed from ${source} to ${target}`, {
+        cause: proc.stderr,
+      });
   }
 
   private async cloneStructureWin(
@@ -76,7 +82,9 @@ export class MariaDBDriver implements IDriver, OSInfo {
     const result = await proc.exited;
 
     if (result !== 0)
-      throw new Error(`Windows Clone failed from ${source} to ${target}`);
+      throw new Error(`Windows Clone failed from ${source} to ${target}`, {
+        cause: proc.stderr,
+      });
   }
 
   deleteBranch(name: string): Promise<void> {

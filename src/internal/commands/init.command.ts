@@ -45,7 +45,12 @@ export const initProjectCommandAsync = async (
   const db = getLibsql();
 
   const metadataSchema = `CREATE TABLE IF NOT EXISTS v_metadata (key TEXT PRIMARY KEY, value TEXT)`;
-  const branchesSchema = `CREATE TABLE IF NOT EXISTS v_branches (git_branch TEXT PRIMARY KEY, physical_db TEXT NOT NULL)`;
+  const branchesSchema = `
+  CREATE TABLE IF NOT EXISTS v_branches (
+    name TEXT PRIMARY KEY, 
+    physical_db TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`;
 
   await db.batch(
     [
@@ -54,6 +59,10 @@ export const initProjectCommandAsync = async (
       {
         sql: "INSERT OR IGNORE INTO v_metadata (key, value) VALUES (?, ?)",
         args: ["current_branch", "main"],
+      },
+      {
+        sql: "INSERT OR IGNORE INTO v_branches (name, physical_db) VALUES (?, ?)",
+        args: ["main", `${projectName}_main`],
       },
     ],
     "write",

@@ -12,6 +12,8 @@
       "@/*": ["./src/*"],
       "@commands/*": ["src/internal/commands/*"],
       "@types/*": ["src/internal/interfaces/*"],
+      "@drivers/*": ["./src/modules/drivers/*"],
+      "@virtual/*": ["./src/modules/virtual/*"],
       "@utils/*": ["./src/utils/*"]
     },
 
