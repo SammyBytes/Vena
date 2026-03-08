@@ -2,58 +2,54 @@
 
 **Vena** is a local-first database orchestrator designed to bring the Git branching experience to the world of relational databases.
 
-> [!NOTE]
-> **Hobby Project:** Vena started as a personal experiment to simplify workflow with MariaDB/MySQL in local development environments (especially on Arch Linux). It is not a network proxy, it is a context manager.
+> [!IMPORTANT]
+> **Context Manager, not a Proxy:** Vena doesn't sit between your app and the DB. It manages the physical infrastructure and schema state so your database follows your code, not the other way around.
 
-###  The Purpose
+### The Purpose
 
-Vena's goal is to eliminate the friction of switching branches in Git and having your database “fall behind.” Instead of dealing with manual migrations or shared databases that get messy, Vena allows each branch of your code to have its own physical “clone” of the database automatically.
+Vena eliminates the friction of switching Git branches and finding your database "out of sync". Instead of manual migrations or messy shared databases, Vena ensures each code branch has its own **isolated physical clone**.
 
-**How does it work?**
+1. **Isolate:** Automatic creation of empty-schema clones for new branches.
+2. **Snapshot:** Capture schema changes as deterministic `.sql` migrations.
+3. **Synchronize:** Use **Bun.hash** to detect "dirty" schemas and sync with teammates via Git.
 
-1. **Isolate:** Create separate physical databases for each branch.
-2. **Synchronize:** Maintain a history of changes in human-readable `.sql` files (inside `.vana/migrations`).
-3. **Automate:** Patches your configuration files (`appsettings.json`, `.env`) so your app always points to the correct database.
+### Architecture
 
-### Simple Architecture
+Vena uses **libSQL** (SQLite) locally to maintain a "Source of Truth" (`.vena/state.db`). It maps your Git branches to physical MariaDB/MySQL databases and tracks which migrations have been applied to your local environment.
 
-Vena uses **libSQL** locally to manage state (which branch you are using, which physical database corresponds to it) without the need for cloud services. Everything lives inside your `.vana/` folder.
-
-### Installation and Use
-
-To install dependencies:
+### CLI Commands
 
 ```bash
-bun install
+# Initialize Vena in your project
+$ vena init <project_name> <engine> [host] [port] [user] [pass]
 
-```
+# Create a new branch (Clones structure, no data)
+$ vena branch <branch_name>
 
-To initialize a project:
+# Save current schema changes to a migration file
+$ vena commit <name> [description]
 
-```bash
-# Create the .vana structure and configure the engine (mariadb/mysql)
-bun run src/index.ts init <project_name> <engine>
-
-```
-
-To run development mode:
-
-```bash
-bun run src/index.ts
+# Check current branch and pending migrations
+$ vena status
 
 ```
 
 ### Roadmap (Stages)
 
-* [x] **Stage 1:** Base infrastructure, JSON configuration, and local status with LibSQL.
-* [x] **Stage 2:** Engine drivers (MariaDB) and physical branch management.
-        * [x] **Stage 2.1:** Memorization of previous branches.
-* [x] **Stage 3:** Vena status management.
-* [ ] **Stage 4:** Schema snapshots and democratic versioning.
-* [ ] **Stage 5:** Deep integration with Git Hooks.
+* [x] **Stage 1:** Base infrastructure and LibSQL state management.
+* [x] **Stage 2:** MariaDB Drivers & Physical Branching.
+* [x] **Stage 3:** Vena Status & Metadata Tracking.
+* [x] **Stage 4:** **Schema Versioning (In Progress)**
+    * [x] Deterministic Snapshots (`--skip-comments`).
+    * [x] Content-based Hashing with `Bun.hash`.
+    * [ ] Migration Apply/Sync logic.
+
+
+* [ ] **Stage 5:** Deep Integration (Git Hooks & Config Patching).
 
 ### Tech Stack
 
-* **Runtime:** [Bun](https://bun.sh) v1.3.6 (Fast all-in-one JavaScript runtime).
-* **State Manager:** [libSQL](https://github.com/tursodatabase/libsql) (SQLite fork) for local metadata management.
+* **Runtime:** [Bun](https://bun.sh) (Fast all-in-one JavaScript runtime).
+* **State Manager:** [libSQL](https://github.com/tursodatabase/libsql) for local metadata.
 * **Target Engines:** MariaDB / MySQL.
+* **Philosophy:** Learning in Public & Digital Gardening.
