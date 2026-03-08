@@ -47,9 +47,10 @@ bun run src/index.ts
 
 * [x] **Stage 1:** Base infrastructure, JSON configuration, and local status with LibSQL.
 * [x] **Stage 2:** Engine drivers (MariaDB) and physical branch management.
-        * [] **Stage 2.1:** Memorization of previous branches.
-* [ ] **Stage 3:** Schema snapshots and democratic versioning.
-* [ ] **Stage 4:** Deep integration with Git Hooks.
+        * [x] **Stage 2.1:** Memorization of previous branches.
+* [ ] **Stage 3:** Vena status management.
+* [ ] **Stage 4:** Schema snapshots and democratic versioning.
+* [ ] **Stage 5:** Deep integration with Git Hooks.
 
 ### Tech Stack
 
