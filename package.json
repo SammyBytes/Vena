@@ -1,6 +1,6 @@
 {
   "name": "vena",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple CLI for managing your projects",
   "module": "src/index.ts",
   "scripts": {
