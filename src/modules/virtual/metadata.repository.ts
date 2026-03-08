@@ -9,6 +9,8 @@ export const switchBranchAsync = async (branch: string): Promise<boolean> => {
   return result.rowsAffected > 0;
 };
 
+
+
 export const getCurrentBranchAsync = async (): Promise<string> => {
   const db = getLibsql();
   const result = await db.execute(

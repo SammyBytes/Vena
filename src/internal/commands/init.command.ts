@@ -61,6 +61,7 @@ export const initProjectCommandAsync = async (
     name TEXT NOT NULL,
     description TEXT,
     branch_name TEXT NOT NULL,
+    content TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (branch_name) REFERENCES v_branches(name) ON DELETE CASCADE
   )`;

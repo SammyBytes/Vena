@@ -1,7 +1,10 @@
 import { getCurrentBranchAsync } from "@/modules/virtual/metadata.repository";
 import { loadContext } from "../context-loader";
 import { loadDriver } from "../driver-loader";
-import { createCommitAsync } from "@/modules/virtual/migrations.repository";
+import {
+  createCommitAsync,
+  evaluateIfDiffExistsAsync,
+} from "@/modules/virtual/migrations.repository";
 
 import path from "node:path";
 import { VENA_MIGRATIONS_DIR } from "@/const";
@@ -33,7 +36,8 @@ export const commitCommandAsync = async (
     }
 
     const now = new Date().toISOString().replace(/[-:T]/g, "").split(".")[0];
-    const outputFilename = `${now}_${name}.sql`;
+    const filename = `${now}_${name}`;
+    const outputFilename = `${filename}.sql`;
     await driver.snapshotStructure(physicalDB.toString(), outputFilename);
 
     const filePath = path.join(VENA_MIGRATIONS_DIR, outputFilename);
@@ -41,11 +45,19 @@ export const commitCommandAsync = async (
     const fileContent = await Bun.file(filePath).text();
     const hash = Bun.hash(fileContent).toString(16);
 
+    const diffExists = await evaluateIfDiffExistsAsync(hash);
+
+    if (diffExists.rows.length > 0) {
+      console.error(`No changes detected for commit ${name}`);
+      return;
+    }
+
     const result = await createCommitAsync(
       hash,
-      name,
+      filename,
       currentBranch,
       description ?? "",
+      fileContent,
     );
 
     if (result.rowsAffected === 0) {

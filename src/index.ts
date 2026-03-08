@@ -5,6 +5,7 @@ import { commitCommandAsync } from "./internal/commands/commit.command";
 import { showHelp } from "./internal/commands/help.command";
 import { initProjectCommandAsync } from "./internal/commands/init.command";
 import { statusCommandAsync } from "./internal/commands/status.command";
+import { switchBranchCommandAsync } from "./internal/commands/switch.command";
 
 const [command, ...args] = Bun.argv.slice(2);
 
@@ -47,6 +48,16 @@ switch (command) {
       process.exit(1);
     }
     await commitCommandAsync(migrationName, args[1]);
+    break;
+
+  case VENA_COMMANDS.switch:
+    const branch = args[0];
+    if (!branch) {
+      console.log("\x1b[31mError: Missing branch name.\x1b[0m");
+      showHelp();
+      process.exit(1);
+    }
+    await switchBranchCommandAsync(branch);
     break;
 
   default:

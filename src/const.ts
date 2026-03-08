@@ -35,6 +35,7 @@ export const VENA_COMMANDS = {
   branch: "branch",
   status: "status",
   commit: "commit",
+  switch: "switch",
 };
 
 export const GIT_IGNORE_FILE = ".gitignore";

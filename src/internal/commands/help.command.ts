@@ -25,6 +25,9 @@ ${yellow}${bold}COMMANDS:${reset}
   ${green}commit${reset} <name> [description]
     ${gray}Take a snapshot of the current schema and save it as a migration.${reset}
 
+  ${green}switch${reset} <name>
+    ${gray}Switch to a different branch.${reset}
+
 ${yellow}${bold}EXAMPLES:${reset}
   ${gray}# Start a project${reset}
   $ vena init my_api mariadb localhost 3306 root 12345
@@ -34,5 +37,8 @@ ${yellow}${bold}EXAMPLES:${reset}
 
   ${gray}# Save your schema changes${reset}
   $ vena commit add_profile_table "Added bio and avatar columns"
+
+  ${gray}# Switch to a different branch${reset}
+  $ vena switch main
   `);
 };
