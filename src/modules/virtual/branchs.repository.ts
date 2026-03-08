@@ -6,6 +6,7 @@ export const createBranchAsync = async (
   physicalDB: string,
 ): Promise<ResultSet> => {
   const db = getLibsql();
+
   const result = await db.execute(
     `INSERT OR IGNORE INTO v_branches (name, physical_db) VALUES (?, ?)`,
     [name, physicalDB],

@@ -1,6 +1,10 @@
-import { createBranchAsync, evaluateIfBranchExistsAsync } from "@/modules/virtual/branchs.repository";
+import {
+  createBranchAsync,
+  evaluateIfBranchExistsAsync,
+} from "@/modules/virtual/branchs.repository";
 import { loadContext } from "../context-loader";
 import { loadDriver } from "../driver-loader";
+import { switchBranchAsync } from "@/modules/virtual/metadata.repository";
 
 export const createBranchCommandAsync = async (newBranch: string) => {
   const ctx = await loadContext();
@@ -21,8 +25,19 @@ export const createBranchCommandAsync = async (newBranch: string) => {
     await driver.createBranch(target);
     await driver.cloneStructure(target);
 
-    await createBranchAsync(newBranch, target);
-    console.log(`Branch ${newBranch} created successfully`);
+    const isBranchCreated = await createBranchAsync(newBranch, target);
+    if (!isBranchCreated) {
+      console.error(`Error creating branch ${newBranch}`);
+      return;
+    }
+
+    var isBranchSwitched = await switchBranchAsync(newBranch);
+    if (!isBranchSwitched) {
+      console.error(`Error switching branch ${newBranch}`);
+      return;
+    }
+
+    console.log(`Branch ${newBranch} created successfully... switching to it`);
   } catch (error) {
     console.error(`Error creating branch ${newBranch}`);
     console.error(error);
