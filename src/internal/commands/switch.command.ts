@@ -12,9 +12,6 @@ import { getBranchMigrations } from "@/modules/virtual/migrations.repository";
 import { evaluateIfBranchExistsAsync } from "@/modules/virtual/branchs.repository";
 
 export const switchBranchCommandAsync = async (branch: string) => {
-  const ctx = await loadContext();
-  const driver = loadDriver(ctx);
-
   try {
     const currentBranch = await getCurrentBranchAsync();
     if (currentBranch === branch) {

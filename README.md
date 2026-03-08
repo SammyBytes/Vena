@@ -40,9 +40,11 @@ $ vena status
 * [x] **Stage 2:** MariaDB Drivers & Physical Branching.
 * [x] **Stage 3:** Vena Status & Metadata Tracking.
 * [x] **Stage 4:** **Schema Versioning (In Progress)**
-    * [x] Deterministic Snapshots (`--skip-comments`).
-    * [x] Content-based Hashing with `Bun.hash`.
-    * [ ] Migration Apply/Sync logic.
+        *[x] Deterministic Snapshots (`--skip-comments`).
+        *[x] Content-based Hashing with `Bun.hash`.
+        *[x] Switch Branch Logic.
+        *[ ] Diff Migrations Logic.
+        *[ ] Migration Sync logic.
 
 
 * [ ] **Stage 5:** Deep Integration (Git Hooks & Config Patching).

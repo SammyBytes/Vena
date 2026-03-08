@@ -2,6 +2,5 @@ export interface IDriver {
   createBranch(name: string): Promise<void>;
   cloneStructure(targetDb: string): Promise<void>;
   snapshotStructure(targetDb: string, outputFilename: string): Promise<void>;
-  deleteBranch(name: string): Promise<void>;
-  listDatabases(): Promise<string[]>;
+  applyMigrations(targetDb: string, migrations: string[]): Promise<void>;
 }

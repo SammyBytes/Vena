@@ -26,7 +26,6 @@ export class MariaDBDriver implements IDriver, OSInfo {
       ? "mariadb-dump.exe"
       : "mariadb-dump";
   }
-
   info: VenaOS;
 
   private options: string[];
@@ -120,10 +119,7 @@ export class MariaDBDriver implements IDriver, OSInfo {
       });
   }
 
-  deleteBranch(name: string): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  listDatabases(): Promise<string[]> {
+  applyMigrations(targetDb: string, migrations: string[]): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }
