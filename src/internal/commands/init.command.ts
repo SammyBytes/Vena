@@ -5,6 +5,7 @@ import {
   VENA_BASE_DIR,
   VENA_CONFIG_FILE,
   VENA_CONFIG_PATH,
+  VENA_MIGRATIONS_FOLDER,
   VENA_STATE_FILE,
 } from "@/const";
 import type { VenaConfig } from "@/internal/interfaces/vena/config.interface";
@@ -25,6 +26,7 @@ export const initProjectCommandAsync = async (
   password?: string | undefined,
 ) => {
   const venaDir = path.join(process.cwd(), VENA_BASE_DIR);
+  const migrationsDir = path.join(venaDir, VENA_MIGRATIONS_FOLDER);
 
   if (await isFileExists(VENA_CONFIG_PATH)) {
     console.log("Vena config file already exists");
@@ -33,6 +35,7 @@ export const initProjectCommandAsync = async (
 
   await mkdir(venaDir, { recursive: true });
 
+  await mkdir(migrationsDir, { recursive: true });
   await setupVenaConfigFiles(
     projectName,
     engine,
@@ -52,10 +55,27 @@ export const initProjectCommandAsync = async (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`;
 
+  const migrationsSchema = `
+  CREATE TABLE IF NOT EXISTS v_migrations (
+    hash TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    branch_name TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (branch_name) REFERENCES v_branches(name) ON DELETE CASCADE
+  )`;
+
+  const indices = [
+    `CREATE INDEX IF NOT EXISTS idx_migrations_branch ON v_migrations(branch_name)`,
+    `CREATE UNIQUE INDEX IF NOT EXISTS idx_migrations_name_branch ON v_migrations(name, branch_name)`,
+  ];
+
   await db.batch(
     [
       metadataSchema,
       branchesSchema,
+      migrationsSchema,
+      ...indices.map((sql) => ({ sql, args: [] })),
       {
         sql: "INSERT OR IGNORE INTO v_metadata (key, value) VALUES (?, ?)",
         args: ["current_branch", "main"],

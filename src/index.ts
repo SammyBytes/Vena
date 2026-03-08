@@ -1,5 +1,6 @@
 import { VENA_COMMANDS } from "./const";
 import { createBranchCommandAsync } from "./internal/commands/branch.command";
+import { commitCommandAsync } from "./internal/commands/commit.command";
 import { initProjectCommandAsync } from "./internal/commands/init.command";
 import { statusCommandAsync } from "./internal/commands/status.command";
 
@@ -25,6 +26,12 @@ switch (command) {
     break;
   case VENA_COMMANDS.status:
     await statusCommandAsync();
+    break;
+
+  case VENA_COMMANDS.commit:
+    const migrationName = args[0] || "my-commit";
+    const description = args[1];
+    await commitCommandAsync(migrationName, description);
     break;
 
   default:
