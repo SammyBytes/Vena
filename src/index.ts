@@ -1,6 +1,7 @@
 import { VENA_COMMANDS } from "./const";
 import { createBranchCommandAsync } from "./internal/commands/branch.command";
 import { initProjectCommandAsync } from "./internal/commands/init.command";
+import { statusCommandAsync } from "./internal/commands/status.command";
 
 const [command, ...args] = Bun.argv.slice(2);
 
@@ -21,6 +22,9 @@ switch (command) {
       process.exit(1);
     }
     await createBranchCommandAsync(newBranch);
+    break;
+  case VENA_COMMANDS.status:
+    await statusCommandAsync();
     break;
 
   default:

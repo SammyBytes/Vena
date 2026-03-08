@@ -26,6 +26,7 @@ export const VENA_STATE_PATH = path.join(
 export const VENA_COMMANDS = {
   init: "init",
   branch: "branch",
+  status: "status",
 };
 
 export const GIT_IGNORE_FILE = ".gitignore";
